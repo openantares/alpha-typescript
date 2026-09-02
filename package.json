@@ -1,6 +1,15 @@
 {
     "name": "@openantares/alpha",
     "version": "0.1.1",
+    "description": "Official TypeScript SDK for the Alpha API by Antares.",
+    "keywords": [
+        "alpha",
+        "antares",
+        "knowledge",
+        "api",
+        "sdk"
+    ],
+    "homepage": "https://docs.alpha.openantares.com",
     "private": false,
     "repository": {
         "type": "git",

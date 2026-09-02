@@ -738,7 +738,7 @@ export class KnowledgeClient {
     }
 
     /**
-     * Action-plan tasks with the full board surface: id (for update_task), board identifier, t-shirt estimate, priority, labels, checklist, due date and milestone. owner "us" = our team, "client" = the counterparty; status "open" = everything not done.
+     * Action-plan tasks with the full board surface: id (for update_task), board identifier, named owner, t-shirt estimate, priority, labels, checklist, due date and milestone. status "open" = everything not done.
      *
      * @param {Alpha.ListTasksRequest} request
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.

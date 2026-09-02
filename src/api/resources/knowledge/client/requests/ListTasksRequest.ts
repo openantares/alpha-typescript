@@ -7,18 +7,12 @@
 export interface ListTasksRequest {
     /** Exact vault id or name from list_vaults. Required whenever the key can reach more than one vault; never guess or use one client's vault for another. */
     vault?: string;
-    owner?: ListTasksRequest.Owner;
     status?: ListTasksRequest.Status;
     /** Only tasks in this milestone (id from list_milestones) */
     milestoneId?: string;
 }
 
 export namespace ListTasksRequest {
-    export const Owner = {
-        Us: "us",
-        Client: "client",
-    } as const;
-    export type Owner = (typeof Owner)[keyof typeof Owner];
     export const Status = {
         Todo: "todo",
         Doing: "doing",

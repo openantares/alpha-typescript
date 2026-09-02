@@ -14,7 +14,7 @@ export interface UpdateTaskRequest {
     title?: string;
     description?: string | null;
     status?: UpdateTaskRequest.Status;
-    owner?: UpdateTaskRequest.Owner;
+    /** Responsible person or company; null clears it */
     assigneeName?: string | null;
     /** T-shirt effort size; null clears it */
     estimate?: UpdateTaskRequest.Estimate | null;
@@ -41,11 +41,6 @@ export namespace UpdateTaskRequest {
         Blocked: "blocked",
     } as const;
     export type Status = (typeof Status)[keyof typeof Status];
-    export const Owner = {
-        Client: "client",
-        Us: "us",
-    } as const;
-    export type Owner = (typeof Owner)[keyof typeof Owner];
     /** T-shirt effort size; null clears it */
     export const Estimate = {
         Xs: "xs",

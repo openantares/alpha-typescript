@@ -3,8 +3,7 @@
 /**
  * @example
  *     {
- *         title: "title",
- *         owner: "client"
+ *         title: "title"
  *     }
  */
 export interface AddTaskRequest {
@@ -14,8 +13,7 @@ export interface AddTaskRequest {
     title: string;
     /** Optional detail */
     description?: string;
-    owner: AddTaskRequest.Owner;
-    /** Person responsible */
+    /** Responsible person or company */
     assigneeName?: string;
     /** T-shirt effort size */
     estimate?: AddTaskRequest.Estimate;
@@ -29,11 +27,6 @@ export interface AddTaskRequest {
 }
 
 export namespace AddTaskRequest {
-    export const Owner = {
-        Client: "client",
-        Us: "us",
-    } as const;
-    export type Owner = (typeof Owner)[keyof typeof Owner];
     /** T-shirt effort size */
     export const Estimate = {
         Xs: "xs",

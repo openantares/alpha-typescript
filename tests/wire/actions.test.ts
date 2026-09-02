@@ -145,7 +145,7 @@ describe("ActionsClient", () => {
     test("addTask (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AlphaClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = { title: "title", owner: "client" };
+        const rawRequestBody = { title: "title" };
         const rawResponseBody = { data: { key: "value" } };
 
         server
@@ -159,7 +159,6 @@ describe("ActionsClient", () => {
 
         const response = await client.actions.addTask({
             title: "title",
-            owner: "client",
         });
         expect(response).toEqual(rawResponseBody);
     });
@@ -167,7 +166,7 @@ describe("ActionsClient", () => {
     test("addTask (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AlphaClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = { title: "title", owner: "client" };
+        const rawRequestBody = { title: "title" };
         const rawResponseBody = { error: { code: "code", message: "message", requestId: "requestId" } };
 
         server
@@ -182,7 +181,6 @@ describe("ActionsClient", () => {
         await expect(async () => {
             return await client.actions.addTask({
                 title: "title",
-                owner: "client",
             });
         }).rejects.toThrow(Alpha.BadRequestError);
     });
@@ -190,7 +188,7 @@ describe("ActionsClient", () => {
     test("addTask (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new AlphaClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = { title: "title", owner: "client" };
+        const rawRequestBody = { title: "title" };
         const rawResponseBody = { error: { code: "code", message: "message", requestId: "requestId" } };
 
         server
@@ -205,7 +203,6 @@ describe("ActionsClient", () => {
         await expect(async () => {
             return await client.actions.addTask({
                 title: "title",
-                owner: "client",
             });
         }).rejects.toThrow(Alpha.UnauthorizedError);
     });
@@ -213,7 +210,7 @@ describe("ActionsClient", () => {
     test("addTask (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new AlphaClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = { title: "title", owner: "client" };
+        const rawRequestBody = { title: "title" };
         const rawResponseBody = { error: { code: "code", message: "message", requestId: "requestId" } };
 
         server
@@ -228,7 +225,6 @@ describe("ActionsClient", () => {
         await expect(async () => {
             return await client.actions.addTask({
                 title: "title",
-                owner: "client",
             });
         }).rejects.toThrow(Alpha.ForbiddenError);
     });
@@ -236,7 +232,7 @@ describe("ActionsClient", () => {
     test("addTask (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new AlphaClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = { title: "title", owner: "client" };
+        const rawRequestBody = { title: "title" };
         const rawResponseBody = { error: { code: "code", message: "message", requestId: "requestId" } };
 
         server
@@ -251,7 +247,6 @@ describe("ActionsClient", () => {
         await expect(async () => {
             return await client.actions.addTask({
                 title: "title",
-                owner: "client",
             });
         }).rejects.toThrow(Alpha.NotFoundError);
     });
@@ -259,7 +254,7 @@ describe("ActionsClient", () => {
     test("addTask (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new AlphaClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = { title: "title", owner: "client" };
+        const rawRequestBody = { title: "title" };
         const rawResponseBody = { error: { code: "code", message: "message", requestId: "requestId" } };
 
         server
@@ -274,7 +269,6 @@ describe("ActionsClient", () => {
         await expect(async () => {
             return await client.actions.addTask({
                 title: "title",
-                owner: "client",
             });
         }).rejects.toThrow(Alpha.TooManyRequestsError);
     });

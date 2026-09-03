@@ -12,5 +12,707 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-typescript-sdk: 3.90.0
-current_generation: d973d3be48609e3655d2e98e192690f2720edaa9
-patches: []
+  - commit_sha: 9c99a327c4cfdd5625b0311070beec6962ad5766
+    tree_hash: 7a99a9a3a7e775ea30caf6549494ecd9d20a6db2
+    timestamp: 2026-09-03T03:24:42.617Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-typescript-sdk: 3.90.0
+current_generation: 9c99a327c4cfdd5625b0311070beec6962ad5766
+patches:
+  - id: patch-ba436460
+    content_hash: sha256:dd4be5a7c022c2643b8bdc9f827c5180798ee2f7e80d16e2fee3492a5f59d60b
+    original_commit: ba4364607e8f12587a907b2b5c2b73f1c460275d
+    original_message: "docs: identify SDK as Alpha by Antares"
+    original_author: Andrew Correa <andrew@monostate.ai>
+    base_generation: 9177e174aa36dbb66e67887ec39ec02a3882cf4f
+    files:
+      - README.md
+      - package.json
+    patch_content: |+
+      From ba4364607e8f12587a907b2b5c2b73f1c460275d Mon Sep 17 00:00:00 2001
+      From: Andrew Correa <andrew@monostate.ai>
+      Date: Wed, 2 Sep 2026 20:42:03 -0300
+      Subject: [PATCH] docs: identify SDK as Alpha by Antares
+
+      ---
+       README.md    | 4 ++--
+       package.json | 9 +++++++++
+       2 files changed, 11 insertions(+), 2 deletions(-)
+
+      diff --git a/README.md b/README.md
+      index 2ef2232..a5dd238 100644
+      --- a/README.md
+      +++ b/README.md
+      @@ -1,9 +1,9 @@
+      -# Openantares TypeScript Library
+      +# Alpha by Antares TypeScript SDK
+       
+       [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fopenantares%2Falpha-typescript)
+       [![npm shield](https://img.shields.io/npm/v/@openantares/alpha)](https://www.npmjs.com/package/@openantares/alpha)
+       
+      -The Openantares TypeScript library provides convenient access to the Openantares APIs from TypeScript.
+      +The Alpha TypeScript SDK provides typed access to the Alpha API by Antares.
+       
+       ## Table of Contents
+       
+      diff --git a/package.json b/package.json
+      index 1fde0d6..08d1e57 100644
+      --- a/package.json
+      +++ b/package.json
+      @@ -1,6 +1,15 @@
+       {
+           "name": "@openantares/alpha",
+           "version": "0.1.1",
+      +    "description": "Official TypeScript SDK for the Alpha API by Antares.",
+      +    "keywords": [
+      +        "alpha",
+      +        "antares",
+      +        "knowledge",
+      +        "api",
+      +        "sdk"
+      +    ],
+      +    "homepage": "https://docs.alpha.openantares.com",
+           "private": false,
+           "repository": {
+               "type": "git",
+      -- 
+      2.52.0
+
+    theirs_snapshot:
+      README.md: |
+        # Alpha by Antares TypeScript SDK
+
+        [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fopenantares%2Falpha-typescript)
+        [![npm shield](https://img.shields.io/npm/v/@openantares/alpha)](https://www.npmjs.com/package/@openantares/alpha)
+
+        The Alpha TypeScript SDK provides typed access to the Alpha API by Antares.
+
+        ## Table of Contents
+
+        - [Installation](#installation)
+        - [Reference](#reference)
+        - [Usage](#usage)
+        - [Environments](#environments)
+        - [Request and Response Types](#request-and-response-types)
+        - [Exception Handling](#exception-handling)
+        - [Advanced](#advanced)
+          - [Subpackage Exports](#subpackage-exports)
+          - [Additional Headers](#additional-headers)
+          - [Additional Query String Parameters](#additional-query-string-parameters)
+          - [Retries](#retries)
+          - [Timeouts](#timeouts)
+          - [Aborting Requests](#aborting-requests)
+          - [Access Raw Response Data](#access-raw-response-data)
+          - [Logging](#logging)
+          - [Custom Fetch](#custom-fetch)
+          - [Runtime Compatibility](#runtime-compatibility)
+        - [Contributing](#contributing)
+
+        ## Installation
+
+        ```sh
+        npm i -s @openantares/alpha
+        ```
+
+        ## Reference
+
+        A full reference for this library is available [here](https://github.com/openantares/alpha-typescript/blob/HEAD/./reference.md).
+
+        ## Usage
+
+        Instantiate and use the client with the following:
+
+        ```typescript
+        import { AlphaClient } from "@openantares/alpha";
+
+        const client = new AlphaClient({ token: "YOUR_TOKEN" });
+        await client.knowledge.suggestVaultScope({
+            conversation: "conversation"
+        });
+        ```
+
+        ## Environments
+
+        This SDK allows you to configure different environments for API requests.
+
+        ```typescript
+        import { AlphaClient, AlphaEnvironment } from "@openantares/alpha";
+
+        const client = new AlphaClient({
+            environment: AlphaEnvironment.Production,
+        });
+        ```
+
+        ## Request and Response Types
+
+        The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+        following namespace:
+
+        ```typescript
+        import { Alpha } from "@openantares/alpha";
+
+        const request: Alpha.SuggestVaultScopeRequest = {
+            ...
+        };
+        ```
+
+        ## Exception Handling
+
+        When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+        will be thrown.
+
+        ```typescript
+        import { AlphaError } from "@openantares/alpha";
+
+        try {
+            await client.knowledge.suggestVaultScope(...);
+        } catch (err) {
+            if (err instanceof AlphaError) {
+                console.log(err.statusCode);
+                console.log(err.message);
+                console.log(err.body);
+                console.log(err.rawResponse);
+            }
+        }
+        ```
+
+        ## Advanced
+
+        ### Subpackage Exports
+
+        This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+        ```typescript
+        import { MetadataClient } from '@openantares/alpha/metadata';
+
+        const client = new MetadataClient({...});
+        ```
+
+        ### Additional Headers
+
+        If you would like to send additional headers as part of the request, use the `headers` request option.
+
+        ```typescript
+        import { AlphaClient } from "@openantares/alpha";
+
+        const client = new AlphaClient({
+            ...
+            headers: {
+                'X-Custom-Header': 'custom value'
+            }
+        });
+
+        const response = await client.knowledge.suggestVaultScope(..., {
+            headers: {
+                'X-Custom-Header': 'custom value'
+            }
+        });
+        ```
+
+        ### Additional Query String Parameters
+
+        If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+        ```typescript
+        const response = await client.knowledge.suggestVaultScope(..., {
+            queryParams: {
+                'customQueryParamKey': 'custom query param value'
+            }
+        });
+        ```
+
+        ### Retries
+
+        The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+        as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+        retry limit (default: 2).
+
+        Which status codes are retried depends on the `retryStatusCodes` generator configuration:
+
+        **`legacy`** (current default): retries on
+        - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+        - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+        - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+        **`recommended`**: retries on
+        - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+        - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+        - [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+        - [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+        - [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
+
+        Use the `maxRetries` request option to configure this behavior.
+
+        ```typescript
+        const response = await client.knowledge.suggestVaultScope(..., {
+            maxRetries: 0 // override maxRetries at the request level
+        });
+        ```
+
+        ### Timeouts
+
+        The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
+
+        ```typescript
+        const response = await client.knowledge.suggestVaultScope(..., {
+            timeoutInSeconds: 30 // override timeout to 30s
+        });
+        ```
+
+        ### Aborting Requests
+
+        The SDK allows users to abort requests at any point by passing in an abort signal.
+
+        ```typescript
+        const controller = new AbortController();
+        const response = await client.knowledge.suggestVaultScope(..., {
+            abortSignal: controller.signal
+        });
+        controller.abort(); // aborts the request
+        ```
+
+        ### Access Raw Response Data
+
+        The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
+        The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
+
+        ```typescript
+        const { data, rawResponse } = await client.knowledge.suggestVaultScope(...).withRawResponse();
+
+        console.log(data);
+        console.log(rawResponse.headers['X-My-Header']);
+        ```
+
+        ### Logging
+
+        The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
+
+        ```typescript
+        import { AlphaClient, logging } from "@openantares/alpha";
+
+        const client = new AlphaClient({
+            ...
+            logging: {
+                level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
+                logger: new logging.ConsoleLogger(), // defaults to ConsoleLogger
+                silent: false, // defaults to true, set to false to enable logging
+            }
+        });
+        ```
+        The `logging` object can have the following properties:
+        - `level`: The log level to use. Defaults to `logging.LogLevel.Info`.
+        - `logger`: The logger to use. Defaults to a `logging.ConsoleLogger`.
+        - `silent`: Whether to silence the logger. Defaults to `true`.
+
+        The `level` property can be one of the following values:
+        - `logging.LogLevel.Debug`
+        - `logging.LogLevel.Info`
+        - `logging.LogLevel.Warn`
+        - `logging.LogLevel.Error`
+
+        To provide a custom logger, you can pass in an object that implements the `logging.ILogger` interface.
+
+        <details>
+        <summary>Custom logger examples</summary>
+
+        Here's an example using the popular `winston` logging library.
+        ```ts
+        import winston from 'winston';
+
+        const winstonLogger = winston.createLogger({...});
+
+        const logger: logging.ILogger = {
+            debug: (msg, ...args) => winstonLogger.debug(msg, ...args),
+            info: (msg, ...args) => winstonLogger.info(msg, ...args),
+            warn: (msg, ...args) => winstonLogger.warn(msg, ...args),
+            error: (msg, ...args) => winstonLogger.error(msg, ...args),
+        };
+        ```
+
+        Here's an example using the popular `pino` logging library.
+
+        ```ts
+        import pino from 'pino';
+
+        const pinoLogger = pino({...});
+
+        const logger: logging.ILogger = {
+          debug: (msg, ...args) => pinoLogger.debug(args, msg),
+          info: (msg, ...args) => pinoLogger.info(args, msg),
+          warn: (msg, ...args) => pinoLogger.warn(args, msg),
+          error: (msg, ...args) => pinoLogger.error(args, msg),
+        };
+        ```
+        </details>
+
+
+        ### Custom Fetch
+
+        The SDK provides a low-level `fetch` method for making custom HTTP requests while still
+        benefiting from SDK-level configuration like authentication, retries, timeouts, and logging.
+        This is useful for calling API endpoints not yet supported in the SDK.
+
+        ```typescript
+        const response = await client.fetch("/v1/custom/endpoint", {
+            method: "GET",
+        }, {
+            timeoutInSeconds: 30,
+            maxRetries: 3,
+            headers: {
+                "X-Custom-Header": "custom-value",
+            },
+        });
+
+        const data = await response.json();
+        ```
+
+        ### Runtime Compatibility
+
+
+        The SDK works in the following runtimes:
+
+
+
+        - Node.js 18+
+        - Vercel
+        - Cloudflare Workers
+        - Deno v1.25+
+        - Bun 1.0+
+        - React Native
+
+
+        ## Contributing
+
+        While we value open-source contributions to this SDK, this library is generated programmatically.
+        Additions made directly to this library would have to be moved over to our generation code,
+        otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+        a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+        an issue first to discuss with us!
+
+        On the other hand, contributions to the README are always very welcome!
+      package.json: |
+        {
+            "name": "@openantares/alpha",
+            "version": "0.1.1",
+            "description": "Official TypeScript SDK for the Alpha API by Antares.",
+            "keywords": [
+                "alpha",
+                "antares",
+                "knowledge",
+                "api",
+                "sdk"
+            ],
+            "homepage": "https://docs.alpha.openantares.com",
+            "private": false,
+            "repository": {
+                "type": "git",
+                "url": "git+https://github.com/openantares/alpha-typescript.git"
+            },
+            "license": "MIT",
+            "type": "commonjs",
+            "main": "./dist/cjs/index.js",
+            "module": "./dist/esm/index.mjs",
+            "types": "./dist/cjs/index.d.ts",
+            "exports": {
+                ".": {
+                    "import": {
+                        "types": "./dist/esm/index.d.mts",
+                        "default": "./dist/esm/index.mjs"
+                    },
+                    "require": {
+                        "types": "./dist/cjs/index.d.ts",
+                        "default": "./dist/cjs/index.js"
+                    },
+                    "default": "./dist/cjs/index.js"
+                },
+                "./metadata": {
+                    "import": {
+                        "types": "./dist/esm/api/resources/metadata/exports.d.mts",
+                        "default": "./dist/esm/api/resources/metadata/exports.mjs"
+                    },
+                    "require": {
+                        "types": "./dist/cjs/api/resources/metadata/exports.d.ts",
+                        "default": "./dist/cjs/api/resources/metadata/exports.js"
+                    },
+                    "default": "./dist/cjs/api/resources/metadata/exports.js"
+                },
+                "./vaults": {
+                    "import": {
+                        "types": "./dist/esm/api/resources/vaults/exports.d.mts",
+                        "default": "./dist/esm/api/resources/vaults/exports.mjs"
+                    },
+                    "require": {
+                        "types": "./dist/cjs/api/resources/vaults/exports.d.ts",
+                        "default": "./dist/cjs/api/resources/vaults/exports.js"
+                    },
+                    "default": "./dist/cjs/api/resources/vaults/exports.js"
+                },
+                "./knowledge": {
+                    "import": {
+                        "types": "./dist/esm/api/resources/knowledge/exports.d.mts",
+                        "default": "./dist/esm/api/resources/knowledge/exports.mjs"
+                    },
+                    "require": {
+                        "types": "./dist/cjs/api/resources/knowledge/exports.d.ts",
+                        "default": "./dist/cjs/api/resources/knowledge/exports.js"
+                    },
+                    "default": "./dist/cjs/api/resources/knowledge/exports.js"
+                },
+                "./actions": {
+                    "import": {
+                        "types": "./dist/esm/api/resources/actions/exports.d.mts",
+                        "default": "./dist/esm/api/resources/actions/exports.mjs"
+                    },
+                    "require": {
+                        "types": "./dist/cjs/api/resources/actions/exports.d.ts",
+                        "default": "./dist/cjs/api/resources/actions/exports.js"
+                    },
+                    "default": "./dist/cjs/api/resources/actions/exports.js"
+                },
+                "./package.json": "./package.json"
+            },
+            "files": [
+                "dist",
+                "reference.md",
+                "README.md",
+                "LICENSE"
+            ],
+            "scripts": {
+                "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+                "format:check": "biome format --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+                "lint": "biome lint --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+                "lint:fix": "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+                "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+                "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+                "build": "pnpm build:cjs && pnpm build:esm",
+                "build:cjs": "tsc --project ./tsconfig.cjs.json",
+                "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+                "test": "vitest",
+                "test:unit": "vitest --project unit",
+                "test:wire": "vitest --project wire"
+            },
+            "dependencies": {},
+            "devDependencies": {
+                "webpack": "^5.105.4",
+                "ts-loader": "^9.5.4",
+                "vitest": "^4.1.1",
+                "msw": "2.11.2",
+                "@types/node": "^20.0.0",
+                "typescript": "~5.9.3",
+                "@biomejs/biome": "2.4.10"
+            },
+            "browser": {
+                "fs": false,
+                "os": false,
+                "path": false,
+                "stream": false,
+                "crypto": false
+            },
+            "packageManager": "pnpm@10.33.0",
+            "engines": {
+                "node": ">=18.0.0"
+            },
+            "sideEffects": false
+        }
+    status: unresolved
+  - id: patch-c8d74322
+    content_hash: sha256:28ad60812bedc1485bc152056ea7a15f3b6dd1697619db1bb17c40f086eb8640
+    original_commit: c8d74322d17398cdb3325189fea75278c7df49e6
+    original_message: "test: protect Alpha SDK request contracts"
+    original_author: Andrew Correa <andrew@monostate.ai>
+    base_generation: 9c99a327c4cfdd5625b0311070beec6962ad5766
+    files:
+      - tests/custom.test.ts
+    patch_content: |
+      diff --git a/tests/custom.test.ts b/tests/custom.test.ts
+      deleted file mode 100644
+      index 7f5e031..0000000
+      --- a/tests/custom.test.ts
+      +++ /dev/null
+      @@ -1,13 +0,0 @@
+      -/**
+      - * This is a custom test file, if you wish to add more tests
+      - * to your SDK.
+      - * Be sure to mark this file in `.fernignore`.
+      - *
+      - * If you include example requests/responses in your fern definition,
+      - * you will have tests automatically generated for you.
+      - */
+      -describe("test", () => {
+      -    it("default", () => {
+      -        expect(true).toBe(true);
+      -    });
+      -});
+  - id: patch-a806c91f
+    content_hash: sha256:c69f87280928e1e6c8b2cc40225e1246d948946a61cb187c099d9d612c836f43
+    original_commit: a806c91f790e08074185866292039dfa322cab05
+    original_message: "ci: verify package install and trusted publishing"
+    original_author: Andrew Correa <andrew@monostate.ai>
+    base_generation: 9c99a327c4cfdd5625b0311070beec6962ad5766
+    files:
+      - .github/workflows/ci.yml
+    patch_content: |
+      diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+      index 935ef8c..e9a1934 100644
+      --- a/.github/workflows/ci.yml
+      +++ b/.github/workflows/ci.yml
+      @@ -45,6 +45,16 @@ jobs:
+             - name: Test
+               run: pnpm test
+       
+      +      - name: Verify the packed SDK as a consumer
+      +        run: |
+      +          pnpm build
+      +          mkdir -p /tmp/alpha-sdk-package /tmp/alpha-sdk-consumer
+      +          pnpm pack --pack-destination /tmp/alpha-sdk-package
+      +          cd /tmp/alpha-sdk-consumer
+      +          npm init --yes
+      +          npm install /tmp/alpha-sdk-package/*.tgz
+      +          node -e "const { AlphaClient } = require('@openantares/alpha'); new AlphaClient({ token: 'test' });"
+      +
+         publish:
+           needs: [ compile, test ]
+           if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+      @@ -59,7 +69,11 @@ jobs:
+             - name: Set up node
+               uses: actions/setup-node@v6
+               with:
+      -          node-version: "lts/Krypton"
+      +          node-version: "24"
+      +          registry-url: "https://registry.npmjs.org"
+      +
+      +      - name: Use an npm version with trusted publishing support
+      +        run: npm install --global npm@^11.5.1
+       
+             - name: Install pnpm
+               uses: pnpm/action-setup@v4
+      @@ -73,17 +87,17 @@ jobs:
+             - name: Publish to npm
+               run: |
+                 if [[ ${GITHUB_REF} == *alpha* ]]; then
+      -            npm publish --access public --tag alpha
+      +            npm publish --access public --provenance --tag alpha
+                 elif [[ ${GITHUB_REF} == *beta* ]]; then
+      -            npm publish --access public --tag beta
+      +            npm publish --access public --provenance --tag beta
+                 else
+                   PKG_NAME=$(node -p "require('./package.json').name")
+                   PKG_VERSION=$(node -p "require('./package.json').version")
+                   CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+                   if npx -y semver@7.8.1 "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
+                     echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
+      -              npm publish --access public --tag backport
+      +              npm publish --access public --provenance --tag backport
+                   else
+      -              npm publish --access public
+      +              npm publish --access public --provenance
+                   fi
+      -          fi
+      \ No newline at end of file
+      +          fi
+    theirs_snapshot:
+      .github/workflows/ci.yml: |
+        name: ci
+
+        on: [push]
+
+        concurrency:
+          group: ${{ github.workflow }}-${{ github.ref }}
+          cancel-in-progress: false
+
+        jobs:
+          compile:
+            runs-on: ubuntu-latest
+
+            steps:
+              - name: Checkout repo
+                uses: actions/checkout@v6
+
+              - name: Set up node
+                uses: actions/setup-node@v6
+
+              - name: Install pnpm
+                uses: pnpm/action-setup@v4
+
+              - name: Install dependencies
+                run: pnpm install --frozen-lockfile
+
+              - name: Compile
+                run: pnpm build
+
+          test:
+            runs-on: ubuntu-latest
+
+            steps:
+              - name: Checkout repo
+                uses: actions/checkout@v6
+
+              - name: Set up node
+                uses: actions/setup-node@v6
+                        
+              - name: Install pnpm
+                uses: pnpm/action-setup@v4
+
+              - name: Install dependencies
+                run: pnpm install --frozen-lockfile
+
+              - name: Test
+                run: pnpm test
+
+              - name: Verify the packed SDK as a consumer
+                run: |
+                  pnpm build
+                  mkdir -p /tmp/alpha-sdk-package /tmp/alpha-sdk-consumer
+                  pnpm pack --pack-destination /tmp/alpha-sdk-package
+                  cd /tmp/alpha-sdk-consumer
+                  npm init --yes
+                  npm install /tmp/alpha-sdk-package/*.tgz
+                  node -e "const { AlphaClient } = require('@openantares/alpha'); new AlphaClient({ token: 'test' });"
+
+          publish:
+            needs: [ compile, test ]
+            if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+            runs-on: ubuntu-latest
+            permissions:
+              contents: read   # Required for checkout
+              id-token: write  # Required for OIDC
+            steps:
+              - name: Checkout repo
+                uses: actions/checkout@v6
+
+              - name: Set up node
+                uses: actions/setup-node@v6
+                with:
+                  node-version: "24"
+                  registry-url: "https://registry.npmjs.org"
+
+              - name: Use an npm version with trusted publishing support
+                run: npm install --global npm@^11.5.1
+
+              - name: Install pnpm
+                uses: pnpm/action-setup@v4
+
+              - name: Install dependencies
+                run: pnpm install --frozen-lockfile
+
+              - name: Build
+                run: pnpm build
+
+              - name: Publish to npm
+                run: |
+                  if [[ ${GITHUB_REF} == *alpha* ]]; then
+                    npm publish --access public --provenance --tag alpha
+                  elif [[ ${GITHUB_REF} == *beta* ]]; then
+                    npm publish --access public --provenance --tag beta
+                  else
+                    PKG_NAME=$(node -p "require('./package.json').name")
+                    PKG_VERSION=$(node -p "require('./package.json').version")
+                    CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+                    if npx -y semver@7.8.1 "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
+                      echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
+                      npm publish --access public --provenance --tag backport
+                    else
+                      npm publish --access public --provenance
+                    fi
+                  fi

@@ -14,18 +14,18 @@ describe("Alpha API contract", () => {
             .mockEndpoint()
             .post("/v1/tools/search_knowledge")
             .header("authorization", "Bearer alpha_test_key")
-            .jsonBody({ query: "Eduardo", vault: "vault_azzas" })
+            .jsonBody({ query: "Sample Contact", vault: "vault_example" })
             .respondWith()
             .statusCode(200)
-            .jsonBody({ data: [{ id: "person_eduardo", name: "Eduardo Maia" }] })
+            .jsonBody({ data: [{ id: "person_sample", name: "Sample Contact" }] })
             .build();
 
         const response = await client.knowledge.searchKnowledge({
-            query: "Eduardo",
-            vault: "vault_azzas",
+            query: "Sample Contact",
+            vault: "vault_example",
         });
 
-        expect(response.data).toEqual([{ id: "person_eduardo", name: "Eduardo Maia" }]);
+        expect(response.data).toEqual([{ id: "person_sample", name: "Sample Contact" }]);
     });
 
     it("sends named task owners without the retired side field", async () => {
@@ -42,20 +42,20 @@ describe("Alpha API contract", () => {
             .header("authorization", "Bearer alpha_test_key")
             .jsonBody({
                 title: "Confirm launch owner",
-                vault: "vault_northstar",
-                assigneeName: "Jordan Lee",
+                vault: "vault_example",
+                assigneeName: "Example Owner",
             })
             .respondWith()
             .statusCode(200)
-            .jsonBody({ data: { identifier: "NS-9" } })
+            .jsonBody({ data: { identifier: "EX-9" } })
             .build();
 
         const response = await client.actions.addTask({
             title: "Confirm launch owner",
-            vault: "vault_northstar",
-            assigneeName: "Jordan Lee",
+            vault: "vault_example",
+            assigneeName: "Example Owner",
         });
 
-        expect(response.data).toEqual({ identifier: "NS-9" });
+        expect(response.data).toEqual({ identifier: "EX-9" });
     });
 });

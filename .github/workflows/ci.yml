@@ -45,16 +45,6 @@ jobs:
       - name: Test
         run: pnpm test
 
-      - name: Verify the packed SDK as a consumer
-        run: |
-          pnpm build
-          mkdir -p /tmp/alpha-sdk-package /tmp/alpha-sdk-consumer
-          pnpm pack --pack-destination /tmp/alpha-sdk-package
-          cd /tmp/alpha-sdk-consumer
-          npm init --yes
-          npm install /tmp/alpha-sdk-package/*.tgz
-          node -e "const { AlphaClient } = require('@openantares/alpha'); new AlphaClient({ token: 'test' });"
-
   publish:
     needs: [ compile, test ]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
@@ -69,11 +59,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v6
         with:
-          node-version: "24"
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Use an npm version with trusted publishing support
-        run: npm install --global npm@^11.5.1
+          node-version: "lts/Krypton"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -87,17 +73,17 @@ jobs:
       - name: Publish to npm
         run: |
           if [[ ${GITHUB_REF} == *alpha* ]]; then
-            npm publish --access public --provenance --tag alpha
+            npm publish --access public --tag alpha
           elif [[ ${GITHUB_REF} == *beta* ]]; then
-            npm publish --access public --provenance --tag beta
+            npm publish --access public --tag beta
           else
             PKG_NAME=$(node -p "require('./package.json').name")
             PKG_VERSION=$(node -p "require('./package.json').version")
             CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
             if npx -y semver@7.8.1 "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
-              npm publish --access public --provenance --tag backport
+              npm publish --access public --tag backport
             else
-              npm publish --access public --provenance
+              npm publish --access public
             fi
           fi

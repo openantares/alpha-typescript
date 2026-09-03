@@ -679,7 +679,7 @@ await client.knowledge.listFindings();
 <dl>
 <dd>
 
-Action-plan tasks with the full board surface: id (for update_task), board identifier, t-shirt estimate, priority, labels, checklist, due date and milestone. owner "us" = our team, "client" = the counterparty; status "open" = everything not done.
+Action-plan tasks with the full board surface: id (for update_task), board identifier, named owner, t-shirt estimate, priority, labels, checklist, due date and milestone. status "open" = everything not done.
 </dd>
 </dl>
 </dd>
@@ -1766,7 +1766,7 @@ await client.actions.resolveConflict({
 <dl>
 <dd>
 
-Create a task on the vault's board (owner: 'client' = the counterparty, 'us' = our team). Supports the full kanban surface: assignee, t-shirt estimate, priority, labels, checklist, due date and milestone (resolve ids with list_milestones). Requires a manager API key.
+Create a task on the vault's board. The owner may be a person's name or a company placeholder. Supports the full kanban surface: t-shirt estimate, priority, labels, checklist, due date and milestone (resolve ids with list_milestones). Requires a manager API key.
 </dd>
 </dl>
 </dd>
@@ -1782,8 +1782,7 @@ Create a task on the vault's board (owner: 'client' = the counterparty, 'us' = o
 
 ```typescript
 await client.actions.addTask({
-    title: "title",
-    owner: "client"
+    title: "title"
 });
 
 ```
@@ -1832,7 +1831,7 @@ await client.actions.addTask({
 <dl>
 <dd>
 
-Edit an existing task. address it by its board identifier (e.g. 'ACME-5', or just 5; the prefix is whatever this vault uses) or by taskId from list_tasks. Fields: status, owner, assignee, t-shirt estimate, priority, labels, checklist, due date, milestone, title, description. Pass null to clear a clearable field (estimate, dueDate, milestoneId, assigneeName, description). Requires a manager API key.
+Edit an existing task by its board identifier (for example 'ACME-5', or just 5; the prefix is whatever this vault uses) or by taskId from list_tasks. Fields: status, named owner, t-shirt estimate, priority, labels, checklist, due date, milestone, title and description. Pass null to clear a clearable field (estimate, dueDate, milestoneId, assigneeName, description). Requires a manager API key.
 </dd>
 </dl>
 </dd>
